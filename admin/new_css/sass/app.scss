@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'fontello';
+    src: url('/new_css/fonts/fontello.eot');
+    src: url('/new_css/fonts/fontello.eot?#iefix') format('embedded-opentype'),
+    url('/new_css/fonts/fontello.woff2') format('woff2'),
+    url('/new_css/fonts/fontello.woff') format('woff'),
+    url('/new_css/fonts/fontello.ttf') format('truetype'),
+    url('/new_css/fonts/fontello.svg#fontello') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'Heebo-Black';
+    src: url('/new_css/fonts/Heebo-Black.eot');
+    src: url('/new_css/fonts/Heebo-Black.eot?#iefix') format('embedded-opentype'),
+    url('/new_css/fonts/Heebo-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Heebo-Bold';
+    src: url('/new_css/fonts/Heebo-Bold.eot');
+    src: url('/new_css/fonts/Heebo-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/new_css/fonts/Heebo-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Heebo-Light';
+    src: url('/new_css/fonts/Heebo-Light.eot');
+    src: url('/new_css/fonts/Heebo-Light.eot?#iefix') format('embedded-opentype'),
+    url('/new_css/fonts/Heebo-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Heebo-Medium';
+    src: url('/new_css/fonts/Heebo-Medium.eot');
+    src: url('/new_css/fonts/Heebo-Medium.eot?#iefix') format('embedded-opentype'),
+    url('/new_css/fonts/Heebo-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Heebo-Regular';
+    src: url('/new_css/fonts/Heebo-Regular.eot');
+    src: url('/new_css/fonts/Heebo-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/new_css/fonts/Heebo-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Heebo-Thin';
+    src: url('/new_css/fonts/Heebo-Thin.eot');
+    src: url('/new_css/fonts/Heebo-Thin.eot?#iefix') format('embedded-opentype'),
+    url('/new_css/fonts/Heebo-Thin.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import "components/main.scss";
+@import "components/dashboard.scss";

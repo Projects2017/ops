@@ -1,0 +1,572 @@
+<?php
+/*********************************************************************
+    Licensed for Jeff Hosking (PMD Furniture) by Radium Development
+        (c) 2004 Radium Development with full rights granted to
+                   Jeff Hosking (PMD Furniture)
+ *********************************************************************/
+
+// This is meant to test form.inc.php
+// This isn't actually meant to be used as a template or anything
+// *********************************************************************************************************
+//   =============== INCLUDES SECTION ====================
+// Secure doc
+include("database.php");
+include("secure.php");
+
+// Include form functions
+include("form.inc.php");
+
+// *********************************************************************************************************
+//   =============== INITIALIZATION SECTION ====================
+// Determine form
+$form = $_REQUEST['form'];
+// Action Instruction (i.e. Display)
+$action = $_REQUEST['action'];
+// Order Display by field
+if (isset($_REQEST['order']))
+	$order = $_REQUEST['order'];
+// Id for editing
+$updateid = $_REQUEST['updateid'];
+$deleteid = $_REQUEST['deleteid'];
+$viewid = $_REQUEST['viewid'];
+if ($_REQUEST['comment']) {
+	$new_comment = $_REQUEST['comment'];
+}
+$sendemail = $_REQUEST['sendemail'];
+// Get data from Insert or Update action (data_columnname fields) only postable
+foreach($_REQUEST as $key => $value) {
+	$reg = array();
+	if(ereg("^data_(.+)",$key, $reg))
+		$data[$reg[1]] = $value;
+}
+// Get old data for update forms
+foreach($_REQUEST as $key => $value) {
+	$reg = array();
+	if(ereg("^old_(.+)",$key, $reg))
+		$old[$reg[1]] = $value;
+}
+
+if ($form)
+{
+	$forminfo = forminfo($form);
+	$formprop = forminfo($form,1);
+}
+$formlist = formlistforms();
+
+// *********************************************************************************************************
+//   =============== OUTPUT SECTION ====================
+
+// ********** MODE SELECTION
+if (!$forminfo || !$action) {
+?>
+<!-- Invalid Form HTML -->
+<HTML><HEAD><TITLE>PMD Claims Database - Invalid Form</TITLE>
+<link rel="stylesheet" href="/styles.css" type="text/css">
+</HEAD>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#EDECDA">
+<CENTER> &nbsp;<BR><A HREF="selectvendor.php"><IMG SRC="/images/logo.gif" BORDER="0"></A></CENTER>&nbsp;<BR>
+
+<?php drawmenu($formlist[0]); ?>
+
+Please choose an option from the menu above.
+
+
+
+</BODY>
+</HTML>
+<?php
+exit(0);
+}
+// ********** FORMINFO SELECTION
+if ($action == "forminfo") {
+	drawmenu($form); ?><br><?php if (secure_is_admin()) { echo "Your access level: ADMINISTRATOR"; } ?><br><?php
+	echo "<PRE>";
+	echo "forminfo('".$form."');\n";
+	print_r($forminfo);
+	echo "\nforminfo('".$form."',1);\n";
+	print_r($formprop);
+	echo "\nformlistforms();\n";
+	print_r($formlist);
+// ********** DISPLAY SUMMARY SELECTION
+} elseif ($action == "display") {
+	$bigarray = formdata($form, $order);
+	?>
+	<HTML><HEAD><TITLE>PMD Dealer Utilities - PMD <?php echo ucwords($form); ?> Claims Database Editor</TITLE>
+		<link rel="stylesheet" href="/styles.css" type="text/css">
+		</HEAD>
+		<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#EDECDA">
+		<CENTER> &nbsp;<BR><A HREF="selectvendor.php"><IMG SRC="/images/logo.gif" BORDER="0"></A>&nbsp;<BR>
+
+
+	<?php
+	drawmenu($form);
+?> <CENTER><FONT FACE=ARIAL SIZE=3><B>PMD <?php echo ucwords($form); ?> Claims Database</B></FONT></CENTER><P>
+<?php
+	if ($bigarray) {
+		echo "<table border=1 cellspacing=2 cellpadding=2>";
+		//echo "<TR>
+		echo "<TR><TH bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1>ACTION</FONT></TH>";
+
+
+
+		foreach($bigarray[0] as $value => $junk) {
+			if (!$forminfo[$value]['on_summary']) {
+				// Display Nothing!
+			} elseif ($value == "clientip") {
+				if (secure_is_admin())
+					echo "<TH bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1>".ucwords($value)."</FONT></TH>";
+			} else
+				echo "<TH bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1><a href=\"?form=". urlencode($form)."&action=display&order=".urlencode($value)."\">".
+				$forminfo[$value]['nicename']."</FONT></TH>";
+		}
+
+
+		foreach($bigarray as $value) {
+			if (secure_is_admin()) {
+				echo "<TR bgcolor=#FFFFFF><TD class=text_12><A HREF=".$SERVER['PHP_SELF']."?action=update&form=".$form."&updateid=".$value['id']."><IMG BORDER=0 ALT='E' SRC=/images/button_edit.png></A>&nbsp;|&nbsp;<A HREF=".$SERVER['PHP_SELF']."?action=delete&form=".$form."&deleteid=". $value['id']."><IMG BORDER=0 ALT='X' SRC=/images/button_drop.png></A>&nbsp;|&nbsp;<A HREF=".$SERVER['PHP_SELF']."?action=view&form=".$form."&viewid=". $value['id']."><IMG BORDER=0 SRC=/images/mag.gif ALT='V'></A></TD>";
+			} else {
+				echo "<TR bgcolor=#FFFFFF><TD class=text_12><A HREF=".$SERVER['PHP_SELF']."?action=view&form=".$form."&viewid=". $value['id']."><IMG BORDER=0 SRC=/images/mag.gif ALT='V'></A></TD>";
+			}
+
+			foreach ($value as $key => $x) {
+					if (!$forminfo[$key]['on_summary']) {
+						// Display Nothing!
+					} elseif ($key == "timestamp") {
+						// YYYYMMDDHHMMSS
+						$x = timestamp2datetime($x);
+						echo "<td class=text_12>".$x."</TD>";
+					} elseif ($key == "clientip") {
+						if (secure_is_admin())
+							echo "<td class=text_12>".$x."</TD>";
+					} elseif ($key == "user_id") {
+						echo "<td class=text_12>".db_user_getuserinfo($x, "username")."</TD>";
+					} elseif ($key == "status") {
+						echo "<td class=text_12>".$claims_status[$x]."</TD>";
+					} elseif (($forminfo[$key]['datatype'] == "upload") && ($x == "1")) {
+						echo "<td class=text_12>";
+						show_upload_links($form, $value['id']);
+						echo "</td>";
+					} elseif (($forminfo[$key]['datatype'] == "upload") && ($x == "0")) {
+						echo "<TD CLASS=text_12>None</TD>";
+					} else {
+						echo "<td class=text_12>".$x."</TD>";
+					}
+
+			}
+			echo "</TR>";
+		}
+		echo "</TABLE><BR>";
+			if (secure_is_admin()) {
+				echo "<B>ACTION LEGEND:</B><BR><IMG BORDER=0 SRC=/images/button_edit.png> = EDIT&nbsp;|&nbsp;<IMG BORDER=0 SRC=/images/button_drop.png> = DELETE&nbsp;|&nbsp;<IMG BORDER=0 SRC=/images/mag.gif ALT='V'> = VIEW<BR><I>Please note, all updates and deletetions are effective immediately.</I>";
+			} else {
+				echo "<B>ACTION LEGEND:</B><BR><IMG BORDER=0 SRC=/images/mag.gif ALT='V'> = VIEW";
+			}
+	} else { ?>
+	<table border=0 cellspacing=0 cellpadding=5>
+		<TR><TH bgcolor=#CCCC99>No Claims on File</TH></TR>
+	</TABLE>
+	<?php } ?>
+
+	</BODY></HTML>
+	<?php
+// ********** INSERT FORM DISPLAY SELECTION
+} elseif (($action == "insert") && (!$data)) {
+	// Remove all non-insertable items
+	foreach ($forminfo as $k => $i) {
+		if ($i["insert"])
+			$x[$k] = $i;
+	}
+	$forminfo = $x;
+	unset($x);
+	unset($i);
+	unset($k);
+	?>
+	<HTML><HEAD>	<TITLE>PMD <?php echo ucwords($form); ?> Claims Database Insert Form</TITLE>
+	<link rel="stylesheet" href="/styles.css" type="text/css">
+	</HEAD>
+	<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#EDECDA">
+	<CENTER> &nbsp;<BR><A HREF="selectvendor.php"><IMG SRC="/images/logo.gif" BORDER="0"></A></CENTER>&nbsp;<BR>
+
+	<BODY>
+	<?php drawmenu($form); ?>
+	<CENTER><FONT FACE=ARIAL SIZE=3><B>PMD <?php echo ucwords($form); ?> Claim Form</B></FONT></CENTER><br>
+	<P>
+		<CENTER><?php echo $formprop['desc']; ?></CENTER>
+	</P>
+    <P>
+		<CENTER><?php echo $formprop['contact_info']; ?></CENTER>
+	</P>
+	<CENTER>
+	<TABLE>
+	<FORM method="POST" enctype="multipart/form-data">
+	<?php
+	foreach($forminfo as $value) {
+		if ($value['datatype'] == "upload") {
+			echo "<TR><TD ALIGN=RIGHT bgcolor=#CCCC99><FONT FACE=ARIAL>".$forminfo[$value['id']]['nicename']; ?>
+			:</TD><TD> <input TYPE="file" NAME="data_<?php echo $value['id'] ?>"><?php
+			if ($value['required'])
+				echo "";
+			else
+				echo "(optional)</TD></TR>";
+		} elseif ($value['datatype'] == "date") {
+			echo "<TR><TD ALIGN=RIGHT bgcolor=#CCCC99><FONT FACE=ARIAL>".$forminfo[$value['id']]['nicename']; ?>:</FONT></TD><TD><input TYPE="text" NAME="data_<?php echo $value['id'] ?>"><?php
+			echo "(date:YYYY-MM-DD)";
+			if ($value['required'])
+				echo "(required)</FONT></TD></TR>";
+			else
+				echo "(optional)";
+		} elseif (($value['datatype'] == "text") && ($value['multiline'] == 1)) {
+			echo "<TR><TD ALIGN=RIGHT bgcolor=#CCCC99><FONT FACE=ARIAL>".$forminfo[$value['id']]['nicename']; ?>:</FONT></TD><TD><FONT FACE=ARIAL><textarea NAME="data_<?php echo $value['id'] ?>"></TEXTAREA><?php
+			echo "(".$value['datatype'].")";
+			if ($value['required'])
+				echo "(required)</FONT></TD></TR>";
+			else
+				echo "(optional)</FONT></TD></TR>";
+		} else {
+			echo "<TR><TD ALIGN=RIGHT bgcolor=#CCCC99><FONT FACE=ARIAL>".$forminfo[$value['id']]['nicename']; ?>:</FONT></TD><TD><FONT FACE=ARIAL><input TYPE="text" NAME="data_<?php echo $value['id'] ?>"><?php
+			echo "(".$value['datatype'].")";
+			if ($value['required'])
+				echo "(required)</FONT></TD></TR>";
+			else
+				echo "(optional)</FONT></TD></TR>";
+		}
+		?><?php
+	}
+	?><TR><TD>&nbsp;</TD><TD><FONT FACE=ARIAL><input type="hidden" NAME="action" VALUE="insert">
+	<input type="hidden" NAME="form" VALUE="<?php echo $form; ?>">
+	<input type=submit value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Submit Claim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+	</FONT></FORM></TD></TR></TABLE><BR>
+
+<?php
+// ********** INSERT DATA SELECTION
+} elseif (($action == "insert") && ($data)) {
+?>		<HTML><HEAD><TITLE>PMD Dealer Utilities - PMD <?php echo ucwords($form); ?> Claims Database Error</TITLE>
+			<link rel="stylesheet" href="/styles.css" type="text/css">
+			</HEAD>
+			<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#EDECDA">
+			<CENTER> &nbsp;<BR><A HREF="selectvendor.php"><IMG SRC="/images/logo.gif" BORDER="0"></A></CENTER>&nbsp;<BR>
+		<?php drawmenu($form); ?>
+<?php
+	unset($success);
+	$success = forminsert($form, $data);
+	if (!$success) {
+?>
+		    The following claim information has been submitted in <?php echo $form ?><P>
+
+			<TABLE><TR BGCOLOR=#CCCC99><TD BGCOLOR=#CCCC99><B>FIELD</B></TD><TD BGCOLOR=#CCCC99><B>NEW VALUE</B></TD></TR>
+			<?php
+			foreach($data as $key => $value) {
+				echo "<TR><TD BGCOLOR=#CCCC99>".$forminfo[$key]['nicename']."</TD><TD BGCOLOR=#FFFFFF>".$value."</TD></TR>";
+			}
+
+	?> </TABLE><P>
+<?php
+
+
+	} else {
+#		echo "An error occurred processing this update.";
+#		print_r($success);
+#		echo "<P>";
+?>
+		<CENTER><TABLE><TR><TD> <?php
+
+		if (is_array($success['missing'])) { ?>
+			<P><FONT FACE=ARIAL SIZE=3>The following fields are missing:
+			<UL>
+			<?php
+			foreach($success['missing'] as $key => $value) {
+				echo "<LI>".$forminfo[$value]['nicename'];
+				echo "</LI>";
+			}
+			?> </FONT></UL></P> <?php
+		}
+		if (is_array($success['wrongtype'])) { 	?>
+			<P><FONT FACE=ARIAL SIZE=3>The following fields are of the wrong type:
+			<UL>
+			<?php
+			foreach($success['wrongtype'] as $key => $value) {
+				echo "<LI>".$forminfo[$value]['nicename']." - Should be a ".$forminfo[$value]['datatype'];
+				echo "</LI>";
+			}
+			?> </UL></FONT></P> <?php
+		}  ?>
+		</TD></TR></TABLE></CENTER>
+		</BODY></HTML> <?php
+	}
+// ********** UPDATE DISPLAY SELECTION
+} elseif ((($action == "update") && (!$data)) && isset($updateid)) {
+	$oldform = formselect($form, $updateid);
+	if (!$oldform)
+		die("ID not present in database");
+	$comments = formcomments($form, $updateid);
+	?>
+	<HTML><HEAD><TITLE>PMD <?php echo ucwords($form); ?> Claims Database Edit Form</TITLE>
+	<link rel="stylesheet" href="/styles.css" type="text/css">
+	</HEAD>
+	<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#EDECDA">
+	<CENTER> &nbsp;<BR><A HREF="selectvendor.php"><IMG SRC="/images/logo.gif" BORDER="0"></A></CENTER>&nbsp;<BR>
+	<?php drawmenu($form); ?>
+
+
+
+	<CENTER><FONT FACE=ARIAL SIZE=3><B>PMD <?php echo ucwords($form); ?> Claims Database Edit Form</B></FONT></CENTER><br>
+
+	<FORM method="POST" enctype="multipart/form-data">
+	<CENTER>
+	<TABLE>
+	<?php
+	foreach($oldform as $key => $value) {
+		if (($key == "id") || ($key == "clientip")) {
+			echo "<TR><TD ALIGN=RIGHT bgcolor=#CCCC99><FONT FACE=ARIAL>".$forminfo[$key]['nicename']; ?>:</FONT></TD><TD> <?php echo $value; ?><input TYPE="hidden" NAME="old_<?php echo $key ?>" VALUE="<?php echo $value; ?>"></TD></TR> <?php
+		} elseif ($key == "user_id") {
+			echo "<TR><TD ALIGN=RIGHT bgcolor=#CCCC99><FONT FACE=ARIAL>".$forminfo[$key]['nicename']; ?>:</FONT></TD><TD> <?php echo db_user_getuserinfo($value, "username"); ?><input TYPE="hidden" NAME="old_<?php echo $key ?>" VALUE="<?php echo $value; ?>"></TD></TR> <?php
+		} elseif ($key == "timestamp") {
+			unset($x);
+			// YYYYMMDDHHMMSS
+			$x = timestamp2datetime($value);
+			echo "<TR><TD ALIGN=RIGHT bgcolor=#CCCC99><FONT FACE=ARIAL>".$forminfo[$key]['nicename']; ?>:</FONT></TD><TD> <?php echo $x; ?><input TYPE="hidden" NAME="old_<?php echo $key ?>" VALUE="<?php echo $value; ?>"></TD></TR> <?php
+		} elseif ($key == "status") {
+				echo "<TD ALIGN=RIGHT bgcolor=#CCCC99>";
+				?><input TYPE="hidden" NAME="old_<?php echo $key ?>" VALUE="<?php echo $value; ?>"><?php
+				echo "<FONT FACE=ARIAL>".$forminfo[$key]['nicename']; ?>:</TD><TD> <?php if ($forminfo[$key]["edit"]) {
+					echo "<SELECT NAME=\"data_".$key."\">";
+					foreach ($claims_status as $k => $x) {
+						if ($k != 0) {
+							echo "<option ";
+							echo "value=\"".$k."\"";
+							if ($k == $value)
+								echo " selected";
+							echo ">".$x."</option>";
+						}
+					}
+					echo "</SELECT>";
+			   } else { 
+				echo $claims_status[$value];
+			   }
+		} elseif ($forminfo[$key]['datatype'] == "upload") {
+			// You can't change upload type fields.
+		} elseif ($forminfo[$key]['datatype'] == "date") {
+			echo "<TD ALIGN=RIGHT bgcolor=#CCCC99><FONT FACE=ARIAL>".$forminfo[$key]['nicename']; ?>:</TD><TD>
+			<?php if ($forminfo[$key]["edit"]) { ?>
+			<input TYPE="text" NAME="data_<?php echo $key ?>" VALUE="<?php echo $value; ?>">
+			<?php } else { ?>
+			<?php echo $value ?>
+			<?php } ?>
+			<input TYPE="hidden" NAME="old_<?php echo $key ?>" VALUE="<?php echo $value; ?>"><?php
+			echo "<FONT FACE=ARIAL>(".$forminfo[$key]['datatype'].")(YYYY-MM-DD)</FONT>";
+			if ($forminfo[$key]['required'])
+				echo "<FONT FACE=ARIAL>(cannot be blank)</FONT>";
+		} else {
+			echo "<TD ALIGN=RIGHT bgcolor=#CCCC99><FONT FACE=ARIAL>".$forminfo[$key]['nicename']; ?>:</TD><TD> <?php if ($forminfo[$key]["edit"]) { ?>
+					<input TYPE="text" NAME="data_<?php echo $key ?>" VALUE="<?php echo $value; ?>">
+					<?php echo "<FONT FACE=ARIAL>(".$forminfo[$key]['datatype'].")</FONT>";
+					if ($forminfo[$key]['required'])
+						echo "<FONT FACE=ARIAL>(cannot be blank)</FONT>";
+			   } else { 
+				echo $value;
+			   } ?>
+			<input TYPE="hidden" NAME="old_<?php echo $key ?>" VALUE="<?php echo $value; ?>"><?php
+		}
+		?></FONT></TD></TR><?php
+	}
+	?>
+	<TR><TD COLSPAN=2><FONT FACE=ARIAL>	<CENTER>
+	<TABLE width=150>
+	  <TR>
+	    <TH colspan=4>
+		  Comments
+		</TH>
+	  </TR>
+	<?php
+	if ($comments) {
+		foreach ($comments as $value) {
+			echo "<TR><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1><B>".timestamp2datetime($value['timestamp'])."</B></FONT></TD></TD><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1><B>".$claims_status[$value['status']]."</B></FONT></TD><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1><B>".db_user_getuserinfo($value['user_id'], "username")."</B></FONT><TD class=text_12>".$value['comment']."</TD></TR>";
+		}
+	}?>
+	<TR><TD colspan=3>New Comment: <input TYPE="text" NAME="comment" SIZE=50></TD>
+	</TR>
+	<TR><TD colspan=3>E-Mail Copy of Claim to: <input TYPE="text" NAME="sendemail" SIZE=50></TD>
+	</TR></TABLE>
+	</FONT></TD></TR>
+	</TD></TR></TABLE>
+	<input type="hidden" NAME="action" VALUE="update">	<input type="hidden" NAME="form" VALUE="<?php echo $form; ?>">	<input type=submit value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Submit Changes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+	</FORM>
+<P>
+	</BODY></HTML>
+	<?php
+// ********** UPDATE DATA SELECTION
+} elseif (($action == "update") && ($data)) {
+	foreach($old as $key => $value)
+		if ($value != $data[$key])
+			$new[$key] = $data[$key];
+	unset($new[id]);
+	unset($new[clientip]);
+	unset($new[timestamp]);
+	unset($new[user_id]);
+	formupdate($form, $old['id'], $new);
+	if ($new_comment)
+		formaddcomment($form, $old['id'], $new_comment);
+	if ($sendemail)
+		formemail($form,$old['id'],$sendemail);
+	?>
+
+	<HTML><HEAD><TITLE>Updated Record <?php echo $old['id']; ?> in form <?php echo $form; ?></TITLE>
+	<link rel="stylesheet" href="/styles.css" type="text/css">
+	</HEAD>
+	<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#EDECDA">
+	<CENTER> &nbsp;<BR><A HREF="selectvendor.php"><IMG SRC="/images/logo.gif" BORDER="0"></A></CENTER>&nbsp;<BR>
+
+
+	<?php drawmenu($form); ?>
+	Updated the following fields in record <?php echo $old['id']; ?> in form <?php echo $form; ?><BR>
+
+	<TABLE><TR BGCOLOR=#CCCC99><TD BGCOLOR=#CCCC99><B>FIELD</B></TD><TD BGCOLOR=#CCCC99><B>NEW VALUE</B></TD></TR>
+	<?php
+	foreach($new as $key => $value) {
+		echo "<TR><TD BGCOLOR=#CCCC99>".$forminfo[$key]['nicename']."</TD><TD BGCOLOR=#FFFFFF>".$value."</TD></TR>";
+	}
+	if ($new_comment) {
+		echo "<TR><TD BGCOLOR=#CCCC99>New Comment</TD><TD BGCOLOR=#FFFFFF>".$new_comment."</TD></TR>";
+
+	}
+	if ($sendemail) {
+		echo "<TR><TD COLSPAN=\"2\" BGCOLOR=#CCCC99>Copy of record sent to ".$sendemail ."</TD></TR>";
+	}
+
+	?> </TABLE><P> <?php
+// ********** DELETE DATA SELECTION
+} elseif (($action == "delete") && ($deleteid)) {
+	if (formdelete($form, $deleteid)) {
+	?>
+	<HTML><HEAD><TITLE>Deleted Record <?php echo $old['id']; ?> in form <?php echo $form; ?></TITLE>
+	<link rel="stylesheet" href="/styles.css" type="text/css">
+	</HEAD>
+	<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#EDECDA">
+	<CENTER> &nbsp;<BR><A HREF="selectvendor.php"><IMG SRC="/images/logo.gif" BORDER="0"></A></CENTER>&nbsp;<BR>
+
+	<?php drawmenu($form); ?>
+	Record # <?php echo $deleteid; ?> deleted from <?php echo $form; ?>.
+	</BODY></HTML>
+	<?php
+
+	} else {
+	?>
+	<?php drawmenu($form); ?>
+	No such record to delete from <?php echo $form; ?>.
+
+	<?php
+	}
+// ********** VIEW DISPLAY SELECTION
+} elseif (($action == "view") && ($viewid)) {
+	$comments = formcomments($form, $viewid);
+	?>
+	<HTML><HEAD><TITLE>PMD Dealer Utilities - PMD <?php echo ucwords($form); ?> Claims Database Viewer</TITLE>
+		<link rel="stylesheet" href="/styles.css" type="text/css">
+		</HEAD>
+		<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#EDECDA">
+		<CENTER> &nbsp;<BR><A HREF="selectvendor.php"><IMG SRC="/images/logo.gif" BORDER="0"></A>&nbsp;<BR>
+
+
+	<?php
+	drawmenu($form);
+?> <CENTER><FONT FACE=ARIAL SIZE=3><B>PMD <?php echo ucwords($form); ?> Claims Database Viewer</B></FONT></CENTER><P> <?php
+
+	$value = formselect($form, $viewid);
+	echo "<table border=1 cellspacing=2 cellpadding=2>";
+	unset($upload);
+	foreach ($value as $key => $x) {
+		if ($key == "timestamp") {
+			echo "<tr><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1>".$forminfo[$key]['nicename']."</td>";
+			// YYYYMMDDHHMMSS
+			$x = timestamp2datetime($x);
+			echo "<td class=text_12><FONT FACE=ARIAL SIZE=-1>".$x."</TD>";
+		} elseif ($key == "clientip") {
+			if (secure_is_admin()) {
+				echo "<tr><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1>".$forminfo[$key]['nicename']."</td>";
+				echo "<td class=text_12><FONT FACE=ARIAL SIZE=-1>".$x."</TD>";
+			}
+		} elseif ($key == "status") {
+			echo "<tr><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1>".$forminfo[$key]['nicename']."</td>";
+			echo "<td class=text_12>".$claims_status[$x]."</TD>";
+		} elseif ($key == "user_id") {
+			echo "<tr><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1>".$forminfo[$key]['nicename']."</td>";
+			echo "<td class=text_12>".db_user_getuserinfo($x, "username")."</TD>";
+		} elseif ($forminfo[$key]['datatype'] == "upload") {
+			$upload = 1;
+		} elseif ($forminfo[$key]['multiline']) {
+			echo "<tr><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1>".$forminfo[$key]['nicename']."</td>";
+			echo "<td class=text_12><FONT FACE=ARIAL SIZE=-1>".wordwrap($x, 100, "<br />\n")."</TD>";
+		} else {
+			echo "<tr><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1>".$forminfo[$key]['nicename']."</td>";
+			echo "<td class=text_12><FONT FACE=ARIAL SIZE=-1>".$x."</TD>";
+		}
+		echo "</tr>";
+	}
+	if ($upload) {
+		echo "<tr><td class=text_12 COLSPAN=3><FONT FACE=ARIAL SIZE=-1>";
+		show_upload_links($form, $value['id']);
+		echo "</td></tr>";
+	}
+	if ($comments) {
+    ?><TR><TD COLSPAN="2">
+	<TABLE>
+	  <TR>
+	    <TH colspan=4>
+		  Comments
+		</TH>
+	  </TR>
+	<?php
+
+		foreach ($comments as $value) {
+			echo "<TR><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1><B>".timestamp2datetime($value['timestamp'])."</B></FONT></TD></TD><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1><B>".$claims_status[$value['status']]."</B></FONT></TD><td class=text_12 bgcolor=#CCCC99><FONT FACE=ARIAL SIZE=-1><B>".db_user_getuserinfo($value['user_id'], "username")."</B></FONT><TD class=text_12>".$value['comment']."</TD></TR>";
+	}?>
+	</TABLE>
+	</TD></TR><?php
+	}
+	echo "</table>";
+} else {
+	echo "Unknown Action<br>";
+	drawmenu($form);
+}
+
+// ********** DISPLAY FUNCTIONS
+
+function show_upload_links($form, $id) {
+	if (file_exists("./".$GLOBALS['claims_uploadstoragedir'].$form."/".$id)) {
+		if ($handle = opendir("./".$GLOBALS['claims_uploadstoragedir']."$form/$id")) {
+			while (false  !== ($file = readdir($handle))) {
+				if ($file  != "." && $file  != "..") {
+					echo "<A HREF=\"./".$GLOBALS['claims_uploadstoragedir']."$form/$id/".$file."\">".$file."</A><BR>";
+				}
+			}
+			closedir($handle);
+		}
+	}
+}
+
+
+
+function drawmenu($form) {  //displays dynamic top pmd style menu appropriate to form requested by user
+
+	echo "<DIV ALIGN=CENTER>";
+
+	$Form = ucwords($form);  //make an all uppercase version of the form name
+	$FORM = strtoupper($form);  //make a first-letter-capped version of the form name
+
+	$formlist = formlistforms();
+	echo "<font FACE=ARIAL><b>GO TO A DATABASE</b><br>| ";
+
+	foreach($formlist as $eachform) {
+		$Eachform = ucwords($eachform);  //make an all uppercase version of the form name
+		echo "<a href=".$SERVER['PHP_SELF']."?form=".$eachform."&action=display>".$Eachform." Database</a> | ";
+	}
+	echo "<br>&nbsp;<BR>";
+
+	echo "<font FACE=ARIAL><b>$FORM MENU OPTIONS</b><br>";
+	echo "| <a href=".$SERVER['PHP_SELF']."?form=".$form."&action=display>Display ".$Form." Database</a> | <a href=".$SERVER['PHP_SELF']."?form=".$form."&action=insert>File a new claim in the ".$Form." Database</a> |<br>&nbsp;<BR>";
+
+	echo "</DIV>";
+}
+
+
+?>

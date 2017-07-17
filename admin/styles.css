@@ -1,0 +1,132 @@
+@media print {
+	.noprint { display: none; }
+}
+
+.fat_red {  font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; color: #CC0000}
+.fat_black {  font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; color: #000000}
+.text_12 {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; text-decoration: none}
+.text_large {  font-family: Arial, Helvetica, sans-serif; font-size: 18px; color: #000000; text-decoration: none; font-weight:bold;}
+.fat_black_12 { font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; color: #000000 }
+.fat_black_14 { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; color: #000000 }
+body {  background-color: #EDECDA}
+a:hover {  color: #666666; text-decoration: none}
+a {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #CC0000; text-decoration: none}
+p {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; text-decoration: none}
+.totalRow {
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #003333;
+	border-bottom-color: #003333;
+}
+.orderTable {
+/*	border: 1px solid #FFFFFF; */
+}
+
+.orderTH, .orderTHRow td {
+	padding: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	background: #cccc99;
+	color: #000000;
+}
+
+.orderTD, .orderTDfail {
+	padding: 5px;
+	border-bottom: 1px solid #fcfcfc;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+}
+.orderTDfail {
+	color: #cc0000;
+	font-weight: bold;
+}
+.orderTDheading {
+	padding: 5px;
+	background: #fcfcfc;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+}
+.customerRowLeft {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	border-top: 1px solid #fff;
+	border-left: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+.customerRowRight {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	border-top: 1px solid #fff;
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+}
+.text_16 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+.alert {  font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; color: #CC0000}
+
+h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 28px;
+	color: #333;
+}
+h2 {
+	font-family: Arial, Helvetica, sans-serif;
+
+}
+h3 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+.userAddressTable {
+	border: 1px solid #CCCC99;
+}
+
+blockquote.article {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #000000;
+  margin: 5px 5px 5px 5px;
+  width: 60%;
+  border: 2px solid #CCCC99;
+  font-size: 75%;
+  padding: 5px;
+  background: #FFFFFF
+}
+
+blockquote.float {
+  display: block;
+  float: right;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #000000;
+  margin: 5px 5px 5px 5px;
+  width: 30%;
+  border: 2px solid #CCCC99;
+  font-size: 75%;
+
+  padding: 5px;
+  background: #FFFFFF
+}
+
+img blockquote.float {
+  display: block;
+  float: right;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  color: #000000;
+  margin: 5px 5px 5px 5px;
+  border: 2px solid #CCCC99;
+  font-size: 75%;
+  padding: 5px;
+  background: #FFFFFF
+}

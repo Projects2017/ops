@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><style wix-style="" type="text/css">.Title{ font:normal normal normal 25px/1.1em jura,sans-serif; } .Menu{ font:normal normal normal 12px/1.1em arial,"ｍｓ ｐゴシック","ms pgothic","돋움",dotum,helvetica,sans-serif; } .Page-title{ font:normal normal normal 45px/1.1em jura,sans-serif; } .Heading-XL{ font:normal normal normal 45px/1.1em jura,sans-serif; } .Heading-L{ font:normal normal normal 40px/1.3em jura,sans-serif; } .Heading-M{ font:normal normal bold 25px/1.2em jura,sans-serif; } .Heading-S{ font:normal normal bold 24px/1.3em jura,sans-serif; } .Body-L{ font:normal normal normal 23px/1.3em jura,sans-serif; } .Body-M{ font:normal normal normal 12px/1.3em arial,"ｍｓ ｐゴシック","ms pgothic","돋움",dotum,helvetica,sans-serif; } .Body-S{ font:normal normal normal 11px/1.3em arial,"ｍｓ ｐゴシック","ms pgothic","돋움",dotum,helvetica,sans-serif; } .Body-XS{ font:normal normal normal 10px/1.3em arial,"ｍｓ ｐゴシック","ms pgothic","돋움",dotum,helvetica,sans-serif; } }</style>
+    <title>Visual Data</title>
+    <link href="widget_data_005/bootstrap.css" rel="stylesheet">
+    <link href="widget_data_005/bootstrap-responsive.css" rel="stylesheet">
+    <script src="widget_data_005/ga.js" async="" type="text/javascript"></script><script type="text/javascript" src="widget_data_005/jquery.js"></script>
+
+
+
+    <link href="widget_data_005/widget.css" rel="stylesheet" type="text/css">
+    <script src="widget_data_005/widget.js"></script>
+
+    <style wix-style="">
+        body{
+            margin:0;padding:0;background-color: transparent;
+        }
+
+        #theTable > tbody{
+            font:normal normal normal 11px/1.3em arial,"ｍｓ ｐゴシック","ms pgothic","돋움",dotum,helvetica,sans-serif;
+        }
+        #theTable > thead{
+            font:normal normal normal 12px/1.3em arial,"ｍｓ ｐゴシック","ms pgothic","돋움",dotum,helvetica,sans-serif;
+        }
+        #theTable > thead > tr > th{
+            color:#303030;
+            background-color: rgba(182,181,181,1);
+            background-image: none;
+            vertical-align: top;
+        }
+        #theTable > tbody > tr {
+            color:#552C00;
+        }
+        .footable-row-detail-name {
+            color:#303030;
+            background-color: rgba(182,181,181,1);
+            border: 1px solid #FFFFFF;
+            font:normal normal normal 12px/1.3em arial,"ｍｓ ｐゴシック","ms pgothic","돋움",dotum,helvetica,sans-serif;
+        }
+        body{
+            border-color: #FFFFFF;
+        }
+        #theTable.isInnerColor{
+            border-top-color: #FFFFFF;
+            border-bottom-color: #FFFFFF;
+
+        }
+        #theTable.isInnerColor{
+            border-right:none;
+            border-left:none;
+        }
+        .footable-row-detail-value {
+            border: 1px solid #FFFFFF;
+            font:normal normal normal 11px/1.3em arial,"ｍｓ ｐゴシック","ms pgothic","돋움",dotum,helvetica,sans-serif;
+        }
+        .footable-sort-indicator{
+            font:normal normal normal 11px/1.3em arial,"ｍｓ ｐゴシック","ms pgothic","돋움",dotum,helvetica,sans-serif;
+        }
+
+        tr.footableOdd + tr.footable-row-detail > td > div > table > tbody > tr > td.footable-row-detail-value{
+            background-color: rgba(255,255,255,1)
+         }
+
+        tr.footableEven + tr.footable-row-detail > td > div > table > tbody > tr > td.footable-row-detail-value{
+            background-color: rgba(255,255,255,1);
+        }
+
+        .footableOdd {
+            background-color: rgba(255,255,255,1);
+            }
+
+        .footableEven {
+            background-color: rgba(255,255,255,1);
+        }
+
+
+        .footable>tbody>tr:hover {
+            background-color: rgba(108,146,198,1);
+        }
+
+        .footable,
+        .footable> thead > tr > th,
+        .footable > tbody > tr > td {
+            border-color: #FFFFFF;
+            border-left-color: #FFFFFF;
+        }
+
+        .footable .pagination > ul > li > a{
+            border-color: #FFFFFF;
+        }
+
+        .filter> thead > tr > th,
+        .footable > thead > tr > th,
+        .footable > thead > tr > td {
+            background-color: #FFFFFF;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#B6B5B5));
+            background-image: -webkit-linear-gradient(top, #FFFFFF, #B6B5B5);
+            background-image: -moz-linear-gradient(top, #FFFFFF, #B6B5B5);
+            background-image: -ms-linear-gradient(top, #FFFFFF, #B6B5B5);
+            background-image: -o-linear-gradient(top, #FFFFFF, #B6B5B5);
+            background-image: linear-gradient(to bottom, #FFFFFF, #B6B5B5);
+        }
+        .footable > thead > tr > th,
+        .footable > thead > tr > td {
+            background-color: #B6B5B5;
+        }
+
+
+        .footable > tfoot > tr > th,
+        .footable > tfoot > tr > td {
+            background-color: #FFFFFF;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#B6B5B5), to(#FFFFFF));
+            background-image: -webkit-linear-gradient(top, #B6B5B5, #FFFFFF);
+            background-image: -moz-linear-gradient(top, #B6B5B5, #FFFFFF);
+            background-image: -ms-linear-gradient(top, #B6B5B5, #FFFFFF);
+            background-image: -o-linear-gradient(top, #B6B5B5, #FFFFFF);
+            background-image: linear-gradient(to bottom, #B6B5B5, #FFFFFF);
+        }
+
+        .footable .pagination > ul > .disabled > span,
+        .footable .pagination > ul > .disabled > a,
+        .footable .pagination > ul > .disabled > a:hover,
+        .footable .pagination > ul > .disabled > a:focus {
+            background-color: #B6B5B5;
+            }
+        .footable .pagination > ul > li > a:hover,
+        .footable .pagination > ul > li > a:focus,
+        .footable .pagination > ul > .active > a,
+        .footable .pagination > ul > .active > span {
+            background-color: #919090;
+        }
+        .preview,.error {
+            display:none;
+            background-color:white;
+        }
+        .option {
+            width: 120px;
+        }
+        .searchBox{
+            width: 147px;
+            height: 23px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            background-color: rgba(255,255,255,0.8);
+            color:#000;/*#303030;*/
+            -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.4);
+            -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,.4);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.4);
+            margin-top: 1px;
+            outline: 0;
+            border:0;
+            padding: 0 6px;
+            font-size: 12px;
+        }
+        ::-webkit-input-placeholder {
+            color:#000;/*#303030;*/
+            opacity:0.5;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+            color:#000;
+            opacity:0.5;
+        }
+
+        ::-moz-placeholder {  /* Firefox 19+ */
+            color:#000;
+            opacity:0.5;
+        }
+
+        :-ms-input-placeholder {
+            color:#000;
+            opacity:0.5;
+        }
+         /*       .filter{
+            border-collapse: separate;
+            border-spacing: 0;
+            border-width: 1px 1px 0 1px;
+            border-style: solid;
+            color: #444444;
+            background: #ffffff;
+            margin :0;
+        }
+*/
+        #tableWrapper::-webkit-scrollbar{-webkit-appearance:none;width:10px;height:10px;border:1px solid #FFFFFF}
+        #tableWrapper::-webkit-scrollbar-track{background-color:rgba(255,255,255,1)}
+        #tableWrapper::-webkit-scrollbar-corner{background-color:rgba(255,255,255,1)}
+        #tableWrapper::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(255,255,255,1);border:solid 1px rgba(255,255,255,1);}
+/*
+        #tableWrapper::-webkit-scrollbar-thumb:horizontal{border-color:#FFFFFF}
+*/
+        #tableWrapper::-webkit-scrollbar-thumb:hover{background-color:rgba(108,146,198,1);}
+
+
+
+    </style>
+
+
+     <script>
+        var settings = {"title":null,"csvUrl":null,"origVersion":null,"viewType":"table","data":{"csvString":"column 1,column 2,column 3,column 4\n1,2,3,4\n2,3,4,5\n5,4,3,2\n3,5,6,3\n","type":"csvUrl","csvUrl":"https://docs.google.com/spreadsheets/d/10fB3H6WGLz-3ah1bA9ew6KPSe1a0D1efj0f7d9XHvHQ/export?format=csv"},"tableParams":{"sortable":false,"filter":false,"showHeaderFooter":false,"appHeight":"auto","innerBorderWidth":10,"filterText":"Search"},"pieChartParams":{},"columnChartParams":{},"lineChartParams":{},"areaChartParams":null};
+        var endpoint = 'desktop';
+        settings = jQuery.extend({}, settings);
+        var version = '3-02';
+        var pageManager;
+//        google.load("visualization", "1", {packages:["corechart"]});
+    function fixErrorVal(value){
+        if(value.indexOf('"')>=0 || value.indexOf(',')>=0){
+            value = value.replace(/"/g,'""');
+            value = '"'+value+'"';
+        }
+        return value;
+    }
+        $(document).ready(function() {
+            pageManager = new PageManager();
+            pageManager.init(settings,endpoint,
+                {
+                    loaderErrorTitle:fixErrorVal('We are having problems loading your table information.'),
+                    loaderErrorBody:fixErrorVal('Make sure to follow the instructions in the Settings Panel'),
+                    loaderErrorTitleEmpty:fixErrorVal('Hey, your table is empty.'),
+                    loaderErrorBodyEmpty:fixErrorVal('You\'ll need to add some information'),
+                    loaderErrorTitleCsv:fixErrorVal('Oops! The URL you entered does not point to a google spreadsheet or a CSV file.'),
+                    loaderErrorBodyCsv:fixErrorVal('Please check the link and try again'),
+                    loaderErrorTitleViewer:fixErrorVal('This table is empty.'),
+                    loaderErrorBodyViewer:fixErrorVal('Nothing to see here'),
+                    loaderErrorTitle400:fixErrorVal('Oops! The URL you entered doesn\'t work.'),
+                    loaderErrorBody400:fixErrorVal('Please check the link and try again'),
+                    loaderErrorTitle403:fixErrorVal('Humm, it seems your Google spreadsheet is set to private.'),
+                    loaderErrorBody403:fixErrorVal('To make it public: Open App Settings > Go to Data Source and follow the instructions'),
+                    loaderErrorTitle404:fixErrorVal('Oops! The URL you entered doesn\'t exist.'),
+                    loaderErrorBody404:fixErrorVal('Please check the link and try again'),
+                    loaderErrorTitle500:fixErrorVal('Ouch! Something broke.'),
+                    loaderErrorBody500:fixErrorVal('The server sending the table information reported a problem'),
+                    loaderErrorTitle503:fixErrorVal('Ouch! Something broke.'),
+                    loaderErrorBody503:fixErrorVal('The server sending the table information is temporarily offline, try again in a few minutes'),
+                 },
+                    'WM7w5f3vApNWrA0_AyT58AZTzUAvpHE8wNVxS5B-xy4.eyJpbnN0YW5jZUlkIjoiMTNmNGU4NWItNTQ0OC1jZjc2LTdlZmEtM2FhY2NkNTdjNGVkIiwic2lnbkRhdGUiOiIyMDE2LTA2LTI2VDE3OjI3OjE4LjYzMFoiLCJ1aWQiOiIxNDViM2RhNy02YWM5LWUyNWMtNDYxZS1jZTgwNjVjZTBlMTIiLCJwZXJtaXNzaW9ucyI6bnVsbCwiaXBBbmRQb3J0IjoiMTAzLjkuMTE0LjExOC81NzYyOCIsInZlbmRvclByb2R1Y3RJZCI6bnVsbCwiZGVtb01vZGUiOmZhbHNlLCJhaWQiOiI2MzZkM2FiYi1lOTAyLTQxZDctOTE2NS01ZDQ1OGFlNDljMjYiLCJiaVRva2VuIjoiYTE3ZWJhNjUtYzFkNi04NGYzLWQwODUtOWVhZmZjMzU1MTMwIiwic2l0ZU93bmVySWQiOiJhNjk5MzgxYy1mNmVkLTQzMDEtYjFjNy01NDU5MTRlNGYwMDMifQ','icmr44h3', version
+            );
+        });
+
+     </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-46327988-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+<link href="widget_data_005/latin.css" rel="stylesheet" type="text/css"><link id="wix-google-fonts" href="widget_data_005/css.css" rel="stylesheet" type="text/css"><style></style></head>
+
+<body>
+<div class="error">
+    <div id="errorTitle" style="font-weight:bold">&nbsp;</div>
+    <div id="errorData">&nbsp;</div>
+</div>
+<div id="chartTableDiv" style="">
+<table id="filterTable" class="filter outerBorder" style="width: 100%; display: none;">
+    <thead><tr><th colspan="100%" style="height:37px;text-align: center;">
+        
+    </th></tr></thead>
+</table>
+</div>
+<div id="tableWrapper" style="overflow: auto"><table id="theTable" class="footable table outerBorder footable-loaded" style="width: 100%; margin: 0px;">
+<thead><tr><th data-type="numeric" id="thCol0">Mon</th><th data-type="alpha" id="thCol1">Jun 1-18</th><th data-type="alpha" id="thCol2"></th></tr></thead><tbody><tr class="footableOdd"><td></td><td>Harris, Kelly</td><td>$61,187</td></tr><tr class="footableEven"><td></td><td>Rackley, Bryan</td><td>$29,481</td></tr><tr class="footableOdd"><td></td><td>Bergeson, Joel</td><td>$26,070</td></tr><tr class="footableEven"><td></td><td>Varn, Sandi</td><td>$22,389</td></tr><tr class="footableOdd"><td></td><td>Glatczak, Andrew</td><td>$22,336</td></tr><tr class="footableEven"><td></td><td>Gallo, Gary</td><td>$18,200</td></tr><tr class="footableOdd"><td></td><td>Loy, Brad</td><td>$17,972</td></tr><tr class="footableEven"><td></td><td>Wert, Bob</td><td>$17,769</td></tr><tr class="footableOdd"><td></td><td>Cuppett, Lora</td><td>$17,588</td></tr><tr class="footableEven"><td></td><td>Harris, Jason</td><td>$17,317</td></tr><tr class="footableOdd"><td></td><td>Moore, Jerry</td><td>$16,248</td></tr><tr class="footableEven"><td></td><td>Wilterding, Ryan</td><td>$14,020</td></tr><tr class="footableOdd"><td></td><td>Campos, Rudy</td><td>$12,734</td></tr><tr class="footableEven"><td></td><td>Grof, John</td><td>$12,578</td></tr><tr class="footableOdd"><td></td><td>Haynes, Josh</td><td>$12,502</td></tr><tr class="footableEven"><td></td><td>Morelos, Julio</td><td>$11,545</td></tr><tr class="footableOdd"><td></td><td>Loy, Laurie</td><td>$11,462</td></tr><tr class="footableEven"><td></td><td>Stephan, Sean</td><td>$11,240</td></tr><tr class="footableOdd"><td></td><td>Hayer, Manpreet</td><td>$10,559</td></tr><tr class="footableEven"><td></td><td>Benhoff, Chris</td><td>$10,194</td></tr><tr class="footableOdd"><td></td><td>MacBeth, Donald</td><td>$10,009</td></tr><tr class="footableEven"><td></td><td>Owen, Ben</td><td>$9,375</td></tr><tr class="footableOdd"><td></td><td>Jensen, Chris</td><td>$9,249</td></tr><tr class="footableEven"><td></td><td>Hernandez, Andres</td><td>$8,299</td></tr><tr class="footableOdd"><td></td><td>Darkow, Dan</td><td>$7,816</td></tr></tbody></table></div>
+<table id="pagerFilter" class="footable footer outerBorder" style="width: 100%; margin: 0px; display: none;">
+    <tfoot id="noPager"><tr><td colspan="100%" style="height:26px;"></td></tr></tfoot>
+</table>
+<div id="chartDiv" tyle="display:none"></div>
+
+
+<script type="text/javascript" src="widget_data_005/Wix.js"></script>
+
+</body></html>

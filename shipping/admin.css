@@ -1,0 +1,59 @@
+body {  background-color: #EDECDA}
+a:hover {  color: #666666; text-decoration: none}
+a {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #CC0000; text-decoration: none}
+p {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; text-decoration: none}
+h1 {
+	font-family: Arial, Helvetica, sans-serif; 
+	font-size: 28px;
+	color: #333;
+}
+h2 {
+	font-family: Arial, Helvetica, sans-serif; 
+
+}
+h3 {
+	font-family: Arial, Helvetica, sans-serif; 
+}
+.userAddressTable {
+	border: 1px solid #CCCC99;
+}
+
+blockquote.article {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px; 
+  color: #000000; 
+  margin: 5px 5px 5px 5px;
+  width: 60%;
+  border: 2px solid #CCCC99;
+  font-size: 75%;
+  padding: 5px;
+  background: #FFFFFF
+}
+
+blockquote.float {
+  display: block;
+  float: right;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px; 
+  color: #000000; 
+  margin: 5px 5px 5px 5px;
+  width: 30%;
+  border: 2px solid #CCCC99;
+  font-size: 75%;
+  padding: 5px;
+  background: #FFFFFF
+}
+
+img blockquote.float {
+  display: block;
+  float: right;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px; 
+  color: #000000; 
+  margin: 5px 5px 5px 5px;
+  border: 2px solid #CCCC99;
+  font-size: 75%;
+  padding: 5px;
+  background: #FFFFFF
+}

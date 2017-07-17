@@ -1,0 +1,167 @@
+<?php
+require("database.php"); //allow database connection
+require("secure.php");   //require user authentication
+?>
+
+<HTML><HEAD><TITLE>PMD Furniture Dealer Utilities - Vendor Shortage Claim Form</TITLE>
+<link rel="stylesheet" href="styles.css" type="text/css">
+</HEAD>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" bgcolor="#EDECDA">
+<CENTER> <IMG SRC=./images/logo.gif></CENTER>
+<center><table>
+<tr>
+<td>
+</td>
+
+
+<td>
+<center>
+<b><i><font face="Arial,Helvetica" size=-1>PMD VENDOR SHORTAGE CLAIM FORM</font></i></b>
+<br><b><i><font face="Arial,Helvetica"><font size=-1>Direct questions to:<BR>
+Marinda Rowland - Dealer Support - Order Processing<BR>
+614-583-2305<BR>
+614-538-0207 (Fax)<BR>
+<A HREF=mailto:marindarowland@pmdfurniture.com>marindarowland@pmdfurniture.com</A><BR>&nbsp;<BR>
+
+
+</font></font></i></b>
+</td>
+</tr>
+</table></center>
+
+<p><form name=request enctype="multipart/form-data" method=post action=./util/shortage_processor.php>
+<hr>
+<center>
+<p>
+<center><table WIDTH="75%" >
+<tr>
+<td WIDTH="30%">
+<div align=right><font face="Arial,Helvetica"><font size=-1>Delear Name:&nbsp;</font></font></div>
+</td>
+
+<td><input TYPE="text" name=name_from_req value="" SIZE=30></td>
+</tr>
+
+<tr>
+<td>
+<div align=RIGHT><font face="Arial,Helvetica"><font size=-1>Your email
+address:&nbsp;</font></font></div>
+</td>
+
+<td><input TYPE="text" name=email_from value="" SIZE=30 OnChange="redoto()"></select></td>
+</tr>
+</table></center>
+
+<center>
+<p>
+<hr WIDTH="100%">
+<p><b><font face="Arial,Helvetica">VENDOR SHORTAGE CLAIM INFORMATION</font></b></center><br>
+
+<table WIDTH="90%" >
+<tr>
+
+
+<td ALIGN=RIGHT><font face="Arial,Helvetica"><font size=-1>Vendor:</font></font></td>
+<td>
+<SELECT
+ NAME='Vendor_req'>
+<OPTION VALUE=''>Please choose Vendor
+<OPTION VALUE='Acme'>Acme
+<OPTION VALUE='Bernards'>Bernards
+<OPTION VALUE='Boyd'>Boyd
+<OPTION VALUE='Campbell Leather'>Campbell Leather
+<OPTION VALUE='Coaster Futons'>Coaster Futons
+<OPTION VALUE='Coaster Leather'>Coaster Leather
+<OPTION VALUE='Corsicana'>Corsicana
+<OPTION VALUE='Crown Mark'>Crown Mark
+<OPTION VALUE='Guardsman'>Guardsman
+<OPTION VALUE='Home Elegance '>Home Elegance
+<OPTION VALUE='King Koil'>King Koil
+<OPTION VALUE='Leather Bella'>Leather Bella
+<OPTION VALUE='Mantua'>Mantua
+<OPTION VALUE='Master Design'>Master Design
+<OPTION VALUE='Progressive'>Progressive
+<OPTION VALUE='Restonic'>Restonic
+<OPTION VALUE='Royal Heritage'>Royal Heritage
+<OPTION VALUE='Simmons'>Simmons
+<OPTION VALUE='Standard'>Standard
+<OPTION VALUE='Symbol'>Symbol
+<OPTION VALUE='Symbol Futon'>Symbol Futon
+<OPTION VALUE='United'>United
+</SELECT>
+</td>
+</tr>
+
+<tr>
+<td ALIGN=RIGHT><font face="Arial,Helvetica"><font size=-1>Trucking company:</font></font></td>
+
+<td><input TYPE="text" NAME="Trucking company_req"
+
+SIZE=20 VALUE=""></td>
+</tr>
+
+<tr>
+<td ALIGN=RIGHT WIDTH="30%"><font face="Arial,Helvetica"><font size=-1>PO#</font></font></td>
+
+<td><input TYPE="text" NAME="PO#_reqnum" SIZE=20 Value=""></td>
+</tr>
+
+<td ALIGN=RIGHT><font face="Arial,Helvetica"><font size=-1>Requesting?:</font></font></td>
+<td>
+<SELECT
+ NAME='Credit_or_Backorder_req'>
+<OPTION VALUE=''>Please choose one:
+<OPTION VALUE='Credit'>Credit
+<OPTION VALUE='Backorder'>Backorder
+</SELECT>
+</TD>
+</TR>
+
+<tr>
+<td ALIGN=RIGHT><font face="Arial,Helvetica"><font size=-1>Items Shorted :</font></font></td>
+
+<td><textarea name="Items_shorted_req" rows=10 cols=60 wrap=physical></textarea>
+</tr>
+
+
+<td ALIGN=RIGHT><font face="Arial,Helvetica"><font size=-1>Shorted against orignal PO#?:</font></font></td>
+<td>
+<SELECT
+ NAME='SHORTED_ON_ORIG_PO_req'>
+<OPTION VALUE=''>Please choose Yes/No
+<OPTION VALUE='Yes'>Yes
+<OPTION VALUE='No'>No
+</SELECT>
+</TD>
+</TR>
+
+
+<td ALIGN=RIGHT><font face="Arial,Helvetica"><font size=-1>Shorted on Packing List?:</font></font></td>
+<td>
+<SELECT
+ NAME='SHORTED_ON_PACKING_LIST_req'>
+<OPTION VALUE=''>Please choose Yes/No
+<OPTION VALUE='Yes'>Yes
+<OPTION VALUE='No'>No
+</SELECT>
+</TD>
+</TR>
+
+
+
+
+
+
+</table>
+<P>
+Upload Bill of Lading:<BR>
+<input type=file name=file1><BR>
+<FONT SIZE=-1><I>(if not BOL not uploaded here, then BOL must be faxed to Marinda at 614-538-0207)</I></FONT>&nbsp;<BR>&nbsp;<P>
+
+
+
+            <input type=hidden name=send value=1>
+            <input type=submit value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Submit Damage Claim&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+
+</body>
+</html>

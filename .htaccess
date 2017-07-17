@@ -1,0 +1,17 @@
+RedirectMatch 404 /\.git
+RedirectMatch 404 /\.svn
+RedirectMatch 404 /\vagrant
+RedirectMatch 404 /\.vagrant
+RedirectMatch 404 /\Vagrantfile
+
+Options -Indexes
+<IfModule mod_php5.c>
+php_flag register_globals on
+php_flag magic_quotes_gpc on
+</IfModule>
+
+RewriteEngine	on
+RewriteRule	^d/(.*)$	/docu_parser.php?q=$1	[L,QSA]
+RewriteRule	^wiki(/.*)$     %{DOCUMENT_ROOT}/wikiinstall/index.php [L]
+
+php_value error_reporting 2039

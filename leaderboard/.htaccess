@@ -1,0 +1,10 @@
+Options -Indexes
+
+RewriteEngine	on
+RewriteRule	^boards	/leaderboard/page_loader.php?id=boards	[L]
+RewriteRule	^events	/leaderboard/page_loader.php?id=15	[L]
+RewriteRule	^resources/([A-Za-z0-9-]+)/?$	/leaderboard/page_loader.php?id=resources&crm_resource_category_id=$1	[L]
+RewriteRule	^resources	/leaderboard/page_loader.php?id=resources	[L]
+RewriteRule	^resources	/leaderboard/page_loader.php?id=resources	[L]
+RewriteRule	^grand-day-club	/leaderboard/page_loader.php?id=7	[L]
+RewriteRule	^incentive_trip	/leaderboard/page_loader.php?id=incentive_trip   [L]

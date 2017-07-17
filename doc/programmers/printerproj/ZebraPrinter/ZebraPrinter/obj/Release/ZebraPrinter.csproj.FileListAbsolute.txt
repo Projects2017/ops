@@ -1,0 +1,14 @@
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ZebraPrinter\ZebraPrinter\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ZebraPrinter\ZebraPrinter\bin\Release\ZebraPrinter.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ZebraPrinter\ZebraPrinter\bin\Release\ZebraPrinter.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ZebraPrinter\ZebraPrinter\obj\Release\ZebraPrinter.dll
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ZebraPrinter\ZebraPrinter\obj\Release\ZebraPrinter.pdb
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ZebraPrinter\ZebraPrinter\bin\Release\ZebraPrinter.dll.config
+C:\Documents and Settings\Administrator\My Documents\Visual Studio 2008\Projects\ZebraPrinter\ZebraPrinter\bin\Release\ZebraPrinter.tlb
+C:\programmers\ZebraPrinter\ZebraPrinter\bin\Release\ZebraPrinter.dll.config
+C:\programmers\ZebraPrinter\ZebraPrinter\bin\Release\ZebraPrinter.dll
+C:\programmers\ZebraPrinter\ZebraPrinter\bin\Release\ZebraPrinter.pdb
+C:\programmers\ZebraPrinter\ZebraPrinter\bin\Release\ZebraPrinter.tlb
+C:\programmers\ZebraPrinter\ZebraPrinter\obj\Release\ResolveAssemblyReference.cache
+C:\programmers\ZebraPrinter\ZebraPrinter\obj\Release\ZebraPrinter.dll
+C:\programmers\ZebraPrinter\ZebraPrinter\obj\Release\ZebraPrinter.pdb

@@ -1,0 +1,20 @@
+p {  font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000; text-decoration: none }
+.pagetitle { text-align: center; font-weight: bold; font-size: 24px }
+.alert { text-align: center; font-size: 14px; font-weight: bold; color: #CC0000 }
+table { border-collapse: collapse; width: 80% }
+#filter td { font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #000000; text-decoration: none }
+.queueheader { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold }
+.queue { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal }
+tr { border-style: none }
+th { border-style: none }
+.newgroup_1 { border-style: dotted; border-bottom-style: none; background-color: silver }
+.newgroup_2 { border-style: dotted; border-bottom-style: none; background-color: yellow }
+.ingroup_1 { border-style: dotted; border-top-style: none; border-bottom-style: none; background-color: silver }
+.ingroup_2 { border-style: dotted; border-top-style: none; border-bottom-style: none; background-color: yellow }
+.endgroup_1 { border-style: dotted; border-top-style: none; background-color: silver }
+.endgroup_2 { border-style: dotted; border-top-style: none; background-color: yellow }
+.complete { background-color: LimeGreen }
+.text_16 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}

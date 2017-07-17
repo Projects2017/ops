@@ -1,0 +1,27 @@
+.info-box{
+    .info-box-text {
+         text-align: center;
+         margin: 10px;
+         a{
+             text-align: center;
+             font-size: 18px;
+             white-space: normal;
+             color: #333;
+             &:hover{
+                 color: #026eb7;
+             }
+         }
+    }
+    .info-box-icon{
+        padding: 20px;
+    }
+}
+.table-vendor{
+    tr{
+        background-color: #fff;
+    }
+    tr.head{
+        background-color: #0074bd;
+        color: #fff;
+    }
+}
